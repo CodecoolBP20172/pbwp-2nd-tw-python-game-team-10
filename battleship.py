@@ -1,6 +1,10 @@
 # ---------------------------------------------------------
-# FUNCTIONS
+# IMPORT
 import modul
+from colorama import init, Fore, Back
+
+# ---------------------------------------------------------
+# FUNCTIONS
 
 
 def display_board():
@@ -17,6 +21,11 @@ def display_board():
     print(" ", 1, 2, 3, 4, 5, 6)
     for row in board2:
         print(" ".join(row))
+
+
+def out_of_range():
+    print(Fore.YELLOW + "Out of range!" + Fore.WHITE)
+    print("")
 
 # -----------------------------------------------------------
 # MAIN
@@ -54,7 +63,7 @@ while rs == [True]:
                 if P1ship1_row > 0 and P1ship1_row < 7:
                     break
                 else:
-                    print("Ship is out of the range!")
+                    out_of_range()
                     continue
             except ValueError:
                 print("Please insert a number!")
@@ -65,7 +74,7 @@ while rs == [True]:
                 if P1ship1_col > 0 and P1ship1_col < 7:
                     break
                 else:
-                    print("Ship is out of the range!")
+                    out_of_range()
                     continue
             except ValueError:
                 print("Please insert a number!")
@@ -76,10 +85,10 @@ while rs == [True]:
                 if P1ship2_row > 0 and P1ship2_row < 7:
                     break
                 else:
-                    print("Ship is out of the range!")
+                    out_of_range()
                     continue
             except ValueError:
-                print("Please insert a number!")
+                out_of_range()
                 continue
         while True:
             try:
@@ -87,7 +96,7 @@ while rs == [True]:
                 if P1ship2_col > 0 and P1ship2_col < 7:
                     break
                 else:
-                    print("Ship is out of the range!")
+                    out_of_range()
                     continue
             except ValueError:
                 print("Please insert a number!")
@@ -112,7 +121,7 @@ while rs == [True]:
                 if P2ship1_row > 0 and P2ship1_row < 7:
                     break
                 else:
-                    print("Ship is out of the range!")
+                    out_of_range()
                     continue
             except ValueError:
                 print("Please insert a Number!")
@@ -123,7 +132,7 @@ while rs == [True]:
                 if P2ship1_col > 0 and P2ship1_col < 7:
                     break
                 else:
-                    print("Ship is out of the range!")
+                    out_of_range()
                     continue
             except ValueError:
                 print("Please insert a number!")
@@ -134,7 +143,7 @@ while rs == [True]:
                 if P2ship2_row > 0 and P2ship2_row < 7:
                     break
                 else:
-                    print("Ship is out of the range")
+                    out_of_range()
                     continue
             except ValueError:
                 print("Please insert a number!")
@@ -145,7 +154,7 @@ while rs == [True]:
                 if P2ship2_col > 0 and P2ship2_col < 7:
                     break
                 else:
-                    print("Ship is out of the range")
+                    out_of_range()
                     continue
             except ValueError:
                 print("Please insert a number!")
@@ -161,14 +170,14 @@ while rs == [True]:
                 break
 
         print("\n")
-        #to hide ship position
+        # to hide ship position
         display_board()
         print("\n")
-    # PLAYER2 SHIPPLACEMENT end / Game
+    # PLAYER2 SHIP PLACEMENT end / Game
         try:
             while game != 15:
 
-            # player one
+                # player one
                 guess1_row = int(input("P1 Guess row: "))
                 guess1_col = int(input("P1 Guess column:"))
 
@@ -217,8 +226,8 @@ while rs == [True]:
                         guess1_col = int(input("P1 Guess column:"))
                         continue
 
-                if (s == [True] and guess1_row == P2ship1_row and guess1_col == P2ship1_col
-                or s == [True] and guess1_row == P2ship2_row and guess1_col == P2ship2_col):
+                if (s == [True] and guess1_row == P2ship1_row and guess1_col == P2ship1_col or
+                s == [True] and guess1_row == P2ship2_row and guess1_col == P2ship2_col):
 
                     try:
                         board2[guess1_row - 1][guess1_col] = "⏺"
@@ -260,7 +269,7 @@ while rs == [True]:
                     print("\n")
                     print("Miss!")
 
-            #player two
+                # player two
                 try:
                     guess2_row = int(input("P2 Guess row: "))
                     guess2_col = int(input("P2 Guess column:"))
@@ -269,8 +278,6 @@ while rs == [True]:
                     print("Please pick a valid position:")
                     guess2_row = int(input("P2 Guess row: "))
                     guess2_col = int(input("P2 Guess column:"))
-
-
 
                 while True:
                     if guess2_row == 0 or guess2_col == 0:
@@ -364,7 +371,7 @@ while rs == [True]:
 
         if game == 15:
             modul.game_over()
-            restart = input("Do you want to play one more round?(y or n)")
+            restart = input("Do you want to play one more round?(y or n) ")
             if restart == "y":
                 rs = [True]
             elif restart == "n":
