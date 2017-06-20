@@ -1,40 +1,34 @@
 # ---------------------------------------------------------
 # FUNCTIONS
-import gameover
+import modul
 
-def print_board(board):
-    for row in board:
-        print(" ".join(row))
-
-def print_board2(board2):
-    for row in board2:
-        print(" ".join(row))
 
 def display_board():
     print("Player 1 board:")
     print("")
-    print(" ", 1, 2, 3, 4 ,5, 6)
-
-    print_board(board)
+    print(" ", 1, 2, 3, 4, 5, 6)
+    for row in board:
+        print(" ".join(row))
 
     print("\n" * 2)
 
     print("Player 2 board:")
     print("")
-    print(" ", 1, 2, 3, 4 ,5, 6)
-
-    print_board(board2)
+    print(" ", 1, 2, 3, 4, 5, 6)
+    for row in board2:
+        print(" ".join(row))
 
 # -----------------------------------------------------------
 # MAIN
+
+
 rs = [True]
 while rs == [True]:
-    gameover.titlescreen()
+    modul.titlescreen()
     titlescreen = input("Press S+enter to start the game\n     or Q+enter to quit: ")
     print("\n" * 8)
 
     if titlescreen == "s" or titlescreen == "S":
-
 
         board = []
         board2 = []
@@ -52,7 +46,8 @@ while rs == [True]:
             j += 1
         display_board()
         print("\n")
-    #Player 1 ship placement
+
+    # Player 1 ship placement
         while True:
             try:
                 P1ship1_row = int(input("P1 Ship1 row: "))
@@ -97,7 +92,7 @@ while rs == [True]:
             except ValueError:
                 print("Please insert a number!")
                 continue
-    #P1 SHIP END / p1 ship same spot
+    # P1 SHIP END / p1 ship same spot
         while True:
             if P1ship1_row == P1ship2_row and P1ship1_col == P1ship2_col:
                 print("Ship is already in that position!")
@@ -110,7 +105,7 @@ while rs == [True]:
         print("\n")
         display_board()
         print("\n")
-    #Player 2 ship placement
+    # Player 2 ship placement
         while True:
             try:
                 P2ship1_row = int(input("P2 Ship1 row: "))
@@ -155,7 +150,7 @@ while rs == [True]:
             except ValueError:
                 print("Please insert a number!")
                 continue
-    #P1 SHIP END / p1 ship same spot
+    # P1 SHIP END / p1 ship same spot
         while True:
             if P2ship1_row == P2ship2_row and P2ship1_col == P2ship2_col:
                 print("Ship is already in that position")
@@ -169,11 +164,11 @@ while rs == [True]:
         #to hide ship position
         display_board()
         print("\n")
-    #PLAYER2 SHIPPLACEMENT end / Game
+    # PLAYER2 SHIPPLACEMENT end / Game
         try:
             while game != 15:
 
-            #player one
+            # player one
                 guess1_row = int(input("P1 Guess row: "))
                 guess1_col = int(input("P1 Guess column:"))
 
@@ -368,7 +363,7 @@ while rs == [True]:
             rs = [False]
 
         if game == 15:
-            gameover.game_over()
+            modul.game_over()
             restart = input("Do you want to play one more round?(y or n)")
             if restart == "y":
                 rs = [True]
