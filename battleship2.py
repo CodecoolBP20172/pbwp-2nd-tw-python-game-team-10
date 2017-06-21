@@ -8,17 +8,19 @@ from colorama import init, Fore, Back
 
 
 def display_board():
-    print("Player 1 board:")
-    print("")
-    print(" ", 1, 2, 3, 4, 5, 6)
+    print("Player 1 board: \n")
+    for i in (range(mult + 1)):
+        print(i, end=" ")
+    print(" ")
     for row in board:
         print(" ".join(row))
 
     print("\n" * 2)
 
-    print("Player 2 board:")
-    print("")
-    print(" ", 1, 2, 3, 4, 5, 6)
+    print("Player 2 board: \n")
+    for i in (range(mult + 1)):
+        print(i, end=" ")
+    print(" ")
     for row in board2:
         print(" ".join(row))
 
@@ -26,6 +28,48 @@ def display_board():
 def out_of_range():
     print(Fore.YELLOW + "Out of range!" + Fore.WHITE)
     print("")
+
+
+def ship_placement_row(player_row):
+    while True:
+        try:
+            if player_row > 0 and player_row < (mult + 1):
+                break
+            else:
+                out_of_range()
+                player_row = int(input("P1 ship row: "))
+                continue
+        except ValueError:
+            print("Please insert a number!")
+            continue
+    return player_row
+
+
+def ship_placement_col(player_col):
+    while True:
+        try:
+            if player_col > 0 and player_col < (mult + 1):
+                break
+            else:
+                out_of_range()
+                player_col = int(input("P1 ship column: "))
+                continue
+        except ValueError:
+            print("Please insert a number!")
+            continue
+    return player_col
+
+
+def same_pos(Px_ship1_row, Px_ship2_row, Px_ship1_col, Px_ship2_col):
+    while True:
+        if Px_ship1_row == Px_ship2_row and Px_ship1_col == Px_ship2_col:
+            print("Ship is already in that position")
+            Px_ship2_col = int(input("P2 Ship2 column: "))
+            continue
+        else:
+            break
+    return (Px_ship2_col)
+
 
 # -----------------------------------------------------------
 # MAIN
@@ -38,6 +82,14 @@ while rs == [True]:
     print("\n" * 8)
 
     if titlescreen == "s" or titlescreen == "S":
+        difficulty = input("Please select difficulty!")
+
+        if difficulty == "1":
+            mult = 4
+        elif difficulty == "2":
+            mult = 6
+        elif difficulty == "3":
+            mult = 8
 
         board = []
         board2 = []
@@ -45,60 +97,40 @@ while rs == [True]:
         s = [False]
         s2 = [False]
 
-        for number in range(1, 7):
-            board.append([str(number)] + ["o"] * 6)
+        for number in range(1, (mult + 1)):
+            board.append([str(number)] + ["o"] * mult)
 
-        for number2 in range(1, 7):
-            board2.append([str(number2)] + ["o"] * 6)
+        for number2 in range(1, (mult + 1)):
+            board2.append([str(number2)] + ["o"] * mult)
 
         display_board()
         print("\n")
 
     # Player 1 ship placement
-        while True:
-            try:
-                P1ship1_row = int(input("P1 Ship1 row: "))
-                if P1ship1_row > 0 and P1ship1_row < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                print("Please insert a number!")
-                continue
-        while True:
-            try:
-                P1ship1_col = int(input("P1 Ship1 column: "))
-                if P1ship1_col > 0 and P1ship1_col < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                print("Please insert a number!")
-                continue
-        while True:
-            try:
-                P1ship2_row = int(input("P1 Ship2 row: "))
-                if P1ship2_row > 0 and P1ship2_row < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                out_of_range()
-                continue
-        while True:
-            try:
-                P1ship2_col = int(input("P1 Ship2 column: "))
-                if P1ship2_col > 0 and P1ship2_col < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                print("Please insert a number!")
-                continue
+
+        P1ship1_row = int(input("P1 Ship1 row: "))
+        P1ship1_row = ship_placement_row(P1ship1_row)
+
+        P1ship1_col = int(input("P1 Ship1 column: "))
+        P1ship1_col = ship_placement_col(P1ship1_col)
+        board[P1ship1_row - 1][P1ship1_col] = "H"
+
+        P1ship2_row = int(input("P1 Ship2 row: "))
+        P1ship2_row = ship_placement_row(P1ship2_row)
+
+        P1ship2_col = int(input("P1 Ship2 column: "))
+        P1ship2_col = ship_placement_col(P1ship2_col)
+        direction = input("Do you want to place your ship vertically or horizontally?(v, h)")
+        if direction == "v":
+            board[P1ship2_row - 1][P1ship2_col] = "H"
+            board[P1ship2_row][P1ship2_col] = "H"
+        elif direction == "h":
+            board[P1ship2_row - 1][P1ship2_col] = "H"
+            board[P1ship2_row - 1][P1ship2_col + 1] = "H"
+
+
+
+
     # P1 SHIP END / p1 ship same spot
         while True:
             if P1ship1_row == P1ship2_row and P1ship1_col == P1ship2_col:
@@ -113,59 +145,30 @@ while rs == [True]:
         display_board()
         print("\n")
     # Player 2 ship placement
-        while True:
-            try:
-                P2ship1_row = int(input("P2 Ship1 row: "))
-                if P2ship1_row > 0 and P2ship1_row < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                print("Please insert a Number!")
-                continue
-        while True:
-            try:
-                P2ship1_col = int(input("P2 Ship1 column: "))
-                if P2ship1_col > 0 and P2ship1_col < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                print("Please insert a number!")
-                continue
-        while True:
-            try:
-                P2ship2_row = int(input("P2 Ship2 row: "))
-                if P2ship2_row > 0 and P2ship2_row < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                print("Please insert a number!")
-                continue
-        while True:
-            try:
-                P2ship2_col = int(input("P2 Ship2 column: "))
-                if P2ship2_col > 0 and P2ship2_col < 7:
-                    break
-                else:
-                    out_of_range()
-                    continue
-            except ValueError:
-                print("Please insert a number!")
-                continue
+        P2ship1_row = int(input("P2 Ship1 row: "))
+        P2ship1_row = ship_placement_row(P2ship1_row)
+
+        P2ship1_col = int(input("P2 Ship1 column: "))
+        P2ship1_col = ship_placement_col(P2ship1_col)
+
+        P2ship2_row = int(input("P2 Ship2 row: "))
+        P2ship2_row = ship_placement_row(P2ship2_row)
+
+        P2ship2_col = int(input("P2 Ship2 column: "))
+        P2ship2_col = ship_placement_col(P2ship2_col)
     # P1 SHIP END / p1 ship same spot
-        while True:
+
+        same_pos(P2ship1_row,P2ship2_row, P2ship1_col, P2ship2_col)
+        P2ship2_col = same_pos(P2ship1_row,P2ship2_row, P2ship1_col, P2ship2_col)
+
+        """while True:
             if P2ship1_row == P2ship2_row and P2ship1_col == P2ship2_col:
                 print("Ship is already in that position")
                 P2ship2_row = int(input("P2 Ship2 row: "))
                 P2ship2_col = int(input("P2 Ship2 column: "))
                 continue
             else:
-                break
+                break"""
 
         print("\n")
         # to hide ship position
